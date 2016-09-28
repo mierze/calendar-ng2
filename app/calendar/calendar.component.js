@@ -9,19 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var date_service_1 = require("./date.service");
+var date_service_1 = require('./date.service');
+var event_service_1 = require('./event.service');
 var CalendarComponent = (function () {
-    function CalendarComponent(_dateService) {
+    function CalendarComponent(_dateService, _eventService) {
         this._dateService = _dateService;
+        this._eventService = _eventService;
         this.showModal = false;
-        //TODO figure out answer for
-        //private _eventService: EventService
     }
     CalendarComponent.prototype.ngOnInit = function () {
         this.date = new Date();
         this.nextM = this.date.getMonth();
         this.nextY = this.date.getFullYear();
-        // this.events = this._eventService.getEvents();
+        this.events = this._eventService.getEvents();
         this.setVars();
         this.loadCalendar();
     };
@@ -52,7 +52,7 @@ var CalendarComponent = (function () {
         for (var e in this.events)
             if (this.events[e].repeat.length) {
                 if (this.events[e].repeat[0] == d.getDay().toString()) {
-                    if (this.events[e].repeat[1]) {
+                    if (this.events[e].repeat[1] != '') {
                         if (this.events[e].repeat[1] == 'a' && !(d.getDate() % 2))
                             daysEvents.push(this.events[e]);
                         else if (this.events[e].repeat[1] == 'b' && d.getDate() % 2)
@@ -96,10 +96,9 @@ var CalendarComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'calendar',
-            templateUrl: 'calendar.component.html',
-            styleUrls: ['calendar.component.css'],
+            templateUrl: 'calendar.component.html'
         }), 
-        __metadata('design:paramtypes', [date_service_1.DateService])
+        __metadata('design:paramtypes', [date_service_1.DateService, event_service_1.EventService])
     ], CalendarComponent);
     return CalendarComponent;
 }());

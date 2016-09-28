@@ -1,24 +1,30 @@
 .dow {
     display: none
 }
+
 .days .cell {
     height: auto;
 }
+
 .well {
     margin: 0;
 }
+
 .cell {
     height: 100px;
     overflow: hidden;
 }
+
 h2, h4, h5 {
     font-weight: bold;
 }
+
 header button {
     width: 14.28571428571429%;
     float: left;
     display: inline !important;
 }
+
 header h2 {
     text-align: center;
     width: 71.4285714286%;
@@ -26,18 +32,21 @@ header h2 {
     margin: auto;
     display: inline !important;
 }
+
 .current {
     background-color: #43ac6a;
 }
+
 .current h5 {
     color: #ffffff;
 }
+
 .cell {
     float: left;
     padding-left: 10px;
     padding-right: 10px;
     border: 1px solid #1b6d85;
-    width: 14.28571428571429%;
+    width:14.285714285714285714285714285714%
 }
 
 @media (max-width: 900px) {

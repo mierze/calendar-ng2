@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { DateService } from "./date.service";
+import { DateService } from './date.service';
+import { EventService } from './event.service';
 
 @Component({
     moduleId: module.id,
     selector: 'calendar',
-    templateUrl: 'calendar.component.html',
-    styleUrls: ['calendar.component.css'],
+    templateUrl: 'calendar.component.html'
 })
 export class CalendarComponent {
     title: string;
@@ -17,16 +17,13 @@ export class CalendarComponent {
     nextY: number;
     events: Event[];
 
-    constructor(private _dateService: DateService ) {
-      //TODO figure out answer for
-      //private _eventService: EventService
-    }
+    constructor(private _dateService: DateService, private _eventService: EventService) { }
 
     ngOnInit() {
         this.date = new Date();
         this.nextM = this.date.getMonth();
         this.nextY = this.date.getFullYear();
-        // this.events = this._eventService.getEvents();
+        this.events = this._eventService.getEvents();
         this.setVars();
         this.loadCalendar();
     }
@@ -60,7 +57,7 @@ export class CalendarComponent {
         for (var e in this.events)
             if (this.events[e].repeat.length) {
                 if (this.events[e].repeat[0] == d.getDay().toString()) {
-                    if (this.events[e].repeat[1]) {
+                    if (this.events[e].repeat[1] != '') {
                         if (this.events[e].repeat[1] == 'a' && !(d.getDate() % 2))
                             daysEvents.push(this.events[e]);
                         else if (this.events[e].repeat[1] == 'b' && d.getDate() % 2)
