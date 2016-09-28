@@ -1,32 +1,32 @@
-import { Component, OnInit } from 'angular2/core';
-import { NgClass } from 'angular2/common';
+import { Component } from '@angular/core';
 import { DateService } from "./date.service";
-import { Event, EventService } from '../events/event.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'calendar',
-    templateUrl: 'app/calendar/calendar.component.html',
-    styleUrls: ['app/calendar/calendar.component.css'],
-    directives: [NgClass]
+    templateUrl: 'calendar.component.html',
+    styleUrls: ['calendar.component.css'],
 })
-export class CalendarComponent implements OnInit {
-    title:string;
-    date:Date;
-    showModal:boolean = false;
-    days:Day[];
-    daySelected:Day;
-    nextM:number;
-    nextY:number;
-    events:Event[];
+export class CalendarComponent {
+    title: string;
+    date: Date;
+    showModal: boolean = false;
+    days: Day[];
+    daySelected: Day;
+    nextM: number;
+    nextY: number;
+    events: Event[];
 
-    constructor(private _dateService:DateService, private _eventService:EventService) {
+    constructor(private _dateService: DateService ) {
+      //TODO figure out answer for
+      //private _eventService: EventService
     }
 
     ngOnInit() {
         this.date = new Date();
         this.nextM = this.date.getMonth();
         this.nextY = this.date.getFullYear();
-        this.events = this._eventService.getEvents();
+        // this.events = this._eventService.getEvents();
         this.setVars();
         this.loadCalendar();
     }
@@ -44,10 +44,10 @@ export class CalendarComponent implements OnInit {
                 let j = 0;
                 while (j++ < d.getDay()) {
                     this.days.push({
-                        "date": new Date(this.nextY, (this.nextM-1), this._dateService.getNumDays(this.nextM - 1) + j - d.getDay()),
+                        "date": new Date(this.nextY, (this.nextM - 1), this._dateService.getNumDays(this.nextM - 1) + j - d.getDay()),
                         "events": null
                     });
-                    }
+                }
             }
             //adding events
             this.addEvents(d);
@@ -55,8 +55,8 @@ export class CalendarComponent implements OnInit {
         }
     }
 
-    addEvents(d:Date) {
-        let daysEvents:Event[] = [];
+    addEvents(d: Date) {
+        let daysEvents: Event[] = [];
         for (var e in this.events)
             if (this.events[e].repeat.length) {
                 if (this.events[e].repeat[0] == d.getDay().toString()) {
@@ -75,10 +75,10 @@ export class CalendarComponent implements OnInit {
                     if (this.events[e].date.getMonth() == d.getMonth())
                         if (this.events[e].date.getFullYear() == d.getFullYear())
                             daysEvents[0] = this.events[e];//overwrites a league
-        this.days.push({"date": d, "events": daysEvents});
+        this.days.push({ "date": d, "events": daysEvents });
     }
 
-    goTo(m:number) {
+    goTo(m: number) {
         if (m < 0) {
             this.nextM = 11;
             this.nextY--;
@@ -94,7 +94,7 @@ export class CalendarComponent implements OnInit {
         this.loadCalendar();
     }
 
-    cellModal(day:Day) {
+    cellModal(day: Day) {
         if (day.events.length) {
             this.daySelected = day;
             this.toggleDetails();
